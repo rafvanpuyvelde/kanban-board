@@ -26,17 +26,19 @@ export const BoardCategory = ({ category }: IProps) => {
   );
 };
 
-const BoardCategoryWrapper = styled(List)`
-  margin: 0 1rem 3rem 0;
+const BoardCategoryWrapper = styled(List).attrs(() => ({
+  guttersize: 1,
+}))`
+  margin: 0 ${(props) => props.guttersize}rem 3rem 0;
   padding: 0;
   width: 100%;
 
   @media only screen and (min-width: 1000px) {
-    width: calc(50% - 1rem);
+    width: calc(50% - ${(props) => props.guttersize}rem);
   }
 
   @media only screen and (min-width: 1200px) {
-    width: calc(calc(100% - 4rem) / 4);
+    width: calc(calc(100% - ${(props) => props.guttersize * 4}rem) / 4);
   }
 `;
 
