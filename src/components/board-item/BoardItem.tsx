@@ -1,26 +1,42 @@
 import React from "react";
 import styled from "styled-components";
-import { Skeleton, List, Card, Tag } from "antd";
+import { Skeleton, List, Card, Tag, Modal } from "antd";
 import {
   EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
+  DeleteOutlined,
+  ExclamationCircleOutlined,
 } from "@ant-design/icons";
 
 import { IBoardCategoryListItem } from "../../types/BoardTypes";
+import { useDispatch } from "react-redux";
+import { deleteBoardItem } from "../../store/slices/boardSlice";
+
+const { confirm } = Modal;
 
 export interface IProps {
   item: IBoardCategoryListItem;
 }
 
 export const BoardItem = ({ item }: IProps) => {
+  const dispatch = useDispatch();
+
+  const deleteItemHandler = () => {
+    confirm({
+      title: "Do you want to delete this item?",
+      icon: <ExclamationCircleOutlined />,
+      content: <p>{item.description}</p>,
+      onOk() {
+        dispatch(deleteBoardItem(item.id));
+      },
+    });
+  };
+
   return (
     <BoardItemWrapper>
       <ItemCard
         actions={[
-          <SettingOutlined key="setting" />,
+          <DeleteOutlined key="delete" onClick={deleteItemHandler} />,
           <EditOutlined key="edit" />,
-          <EllipsisOutlined key="ellipsis" />,
         ]}
       >
         <Skeleton loading={false} avatar active>

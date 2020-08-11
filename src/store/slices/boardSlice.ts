@@ -1,17 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import { IBoardCategoryList } from "../../types/BoardTypes";
 
-export interface BoardState extends IBoardCategoryList {
+export interface IBoardState extends IBoardCategoryList {
   users: string[];
 }
 
-const initialBoardState: BoardState = {
+const initialBoardState: IBoardState = {
   name: "Kanban board",
   users: ["Jane Doe", "John Doe"],
   categories: [
     {
       name: "TO DO",
-      listItems: [
+      items: [
         {
           id: 1,
           description:
@@ -37,56 +38,27 @@ const initialBoardState: BoardState = {
     },
     {
       name: "IN PROGRESS",
-      listItems: [
-        {
-          id: 1,
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-          author: "Jane Doe",
-          tags: ["React", "CSS"],
-        },
-        {
-          id: 2,
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-          author: "John Doe",
-          tags: ["React", "CSS"],
-        },
-        {
-          id: 3,
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-          author: "Jane Doe",
-          tags: ["React", "CSS"],
-        },
-        {
-          id: 4,
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-          author: "Jane Doe",
-          tags: ["React", "CSS"],
-        },
-      ],
+      items: [],
     },
     {
       name: "CODE REVIEW",
-      listItems: [
+      items: [
         {
-          id: 1,
+          id: 8,
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
           author: "Jane Doe",
           tags: ["React", "CSS"],
         },
         {
-          id: 2,
+          id: 9,
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
           author: "Jane Doe",
           tags: ["React", "CSS"],
         },
         {
-          id: 3,
+          id: 10,
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
           author: "John Doe",
@@ -96,37 +68,37 @@ const initialBoardState: BoardState = {
     },
     {
       name: "DONE",
-      listItems: [
+      items: [
         {
-          id: 1,
+          id: 11,
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
           author: "John Doe",
           tags: ["React", "CSS"],
         },
         {
-          id: 2,
+          id: 12,
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
           author: "Jane Doe",
           tags: ["React", "CSS"],
         },
         {
-          id: 3,
+          id: 13,
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
           author: "Jane Doe",
           tags: ["React", "CSS"],
         },
         {
-          id: 4,
+          id: 14,
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
           author: "Jane Doe",
           tags: ["React", "CSS"],
         },
         {
-          id: 5,
+          id: 15,
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
           author: "John Doe",
@@ -137,10 +109,45 @@ const initialBoardState: BoardState = {
   ],
 };
 
+const getBoardItemDetailsById = (
+  state: IBoardState,
+  id: number
+): {
+  categoryIndex: number;
+  itemIndex: number;
+} | null => {
+  let boardItemDetails = null;
+
+  for (
+    let categoryIndex = 0;
+    categoryIndex < state.categories.length;
+    categoryIndex++
+  ) {
+    const category = state.categories[categoryIndex];
+    const itemIndex = category.items.findIndex((item) => item.id === id);
+    if (itemIndex !== -1) boardItemDetails = { categoryIndex, itemIndex };
+  }
+
+  console.log(boardItemDetails);
+
+  return boardItemDetails;
+};
+
 const boardSlice = createSlice({
   name: "board",
   initialState: initialBoardState,
-  reducers: {},
+  reducers: {
+    deleteBoardItem: (state, { payload }: PayloadAction<number>) => {
+      const itemDetails = getBoardItemDetailsById(state, payload);
+      if (itemDetails)
+        state.categories[itemDetails?.categoryIndex].items.splice(
+          itemDetails.itemIndex,
+          1
+        );
+    },
+  },
 });
+
+export const { deleteBoardItem } = boardSlice.actions;
 
 export default boardSlice;

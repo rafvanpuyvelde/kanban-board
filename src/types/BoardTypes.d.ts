@@ -5,7 +5,7 @@ export interface IBoardCategoryList {
 
 export interface IBoardCategory {
   name: string;
-  listItems: IBoardCategoryListItem[];
+  items: IBoardCategoryListItem[];
 }
 
 export interface IBoardCategoryListItem {

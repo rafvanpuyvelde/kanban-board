@@ -16,11 +16,11 @@ export const BoardCategory = ({ category }: IProps) => {
       header={
         <BoardCategoryHeader
           categoryName={category.name}
-          amountOfCategoryItems={category.listItems.length}
+          amountOfCategoryItems={category.items.length}
         />
       }
       bordered
-      dataSource={category.listItems}
+      dataSource={category.items}
       renderItem={(item: any) => <BoardItem key={item.id} item={item} />}
     />
   );
