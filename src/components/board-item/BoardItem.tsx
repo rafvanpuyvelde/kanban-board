@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Skeleton, List, Card, Avatar } from "antd";
+import { Skeleton, List, Card, Tag } from "antd";
 import {
   EditOutlined,
   EllipsisOutlined,
@@ -8,8 +8,6 @@ import {
 } from "@ant-design/icons";
 
 import { IBoardCategoryListItem } from "../../types/BoardTypes";
-
-const { Meta } = Card;
 
 export interface IProps {
   item: IBoardCategoryListItem;
@@ -26,13 +24,15 @@ export const BoardItem = ({ item }: IProps) => {
         ]}
       >
         <Skeleton loading={false} avatar active>
-          <Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title="Card title"
-            description="This is the description"
-          />
+          <p>{item.description}</p>
+          <div>
+            {item.tags &&
+              item.tags.map((tag) => (
+                <Tag key={tag} color="cyan">
+                  {tag}
+                </Tag>
+              ))}
+          </div>
         </Skeleton>
       </ItemCard>
     </BoardItemWrapper>
@@ -51,7 +51,7 @@ const ItemCard = styled(Card)`
   border: none;
   min-width: 100%;
   min-height: 100%;
-  box-shadow: 5px 8px 24px 5px rgba(208, 216, 243, 0.6);
+  box-shadow: 0px 6px 16px 1px rgba(208, 216, 243, 0.6);
 `;
 
 export default BoardItem;

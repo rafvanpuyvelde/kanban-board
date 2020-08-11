@@ -9,6 +9,7 @@
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.46",
+    "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.7",
     "@types/styled-components": "^5.1.2"
@@ -17,8 +18,8 @@
     "@reduxjs/toolkit": "^1.2.5",
     "antd": "^4.5.3",
     "react": "^16.13.1",
+    "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.1",
-    "react-draggable": "^4.4.3",
     "react-hook-form": "^6.3.2",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.2",
