@@ -1,144 +1,16 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 import BoardCategoryList from "../board-category-list/BoardCategoryList";
-import { IBoardCategoryList } from "../../types/BoardTypes";
 
 export const Board = () => {
-  const boardCategories: IBoardCategoryList = {
-    name: "Kanban board",
-    categories: [
-      {
-        name: "TO DO",
-        listItems: [
-          {
-            id: 1,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-          {
-            id: 2,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-          {
-            id: 3,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-        ],
-      },
-      {
-        name: "IN PROGRESS",
-        listItems: [
-          {
-            id: 1,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-          {
-            id: 2,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-          {
-            id: 3,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-          {
-            id: 4,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-        ],
-      },
-      {
-        name: "CODE REVIEW",
-        listItems: [
-          {
-            id: 1,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-          {
-            id: 2,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-          {
-            id: 3,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-        ],
-      },
-      {
-        name: "DONE",
-        listItems: [
-          {
-            id: 1,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-          {
-            id: 2,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-          {
-            id: 3,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-          {
-            id: 4,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-          {
-            id: 5,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In aliquet a lectus at efficitur. Sed vestibulum risus massa, nec ullamcorper diam congue sed.",
-            author: "Jane Doe",
-            tags: ["React", "CSS"],
-          },
-        ],
-      },
-    ],
-  };
+  const board = useSelector((state: RootState) => state.board);
 
   return (
     <div>
-      <h1>{boardCategories.name}</h1>
-      <BoardCategoryList categories={boardCategories.categories} />
+      <h1>{board.name}</h1>
+      <BoardCategoryList categories={board.categories} />
     </div>
   );
 };
