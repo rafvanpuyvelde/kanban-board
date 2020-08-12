@@ -133,6 +133,11 @@ const getBoardItemDetailsById = (
   return boardItemDetails;
 };
 
+const getNewBoardItemId = (state: IBoardState) => {
+  const lastCategory = state.categories[state.categories.length - 1];
+  return lastCategory.items[lastCategory.items.length - 1].id + 1;
+};
+
 const boardSlice = createSlice({
   name: "board",
   initialState: initialBoardState,
@@ -145,9 +150,30 @@ const boardSlice = createSlice({
           1
         );
     },
+    createBoardItem: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        category: string;
+        description: string;
+        tags: string[];
+      }>
+    ) => {
+      const category = state.categories.find(
+        (category) => category.name === payload.category
+      );
+      if (category)
+        category.items.push({
+          id: getNewBoardItemId(state),
+          description: payload.description,
+          author: "Jane Doe",
+          tags: payload.tags,
+        });
+    },
   },
 });
 
-export const { deleteBoardItem } = boardSlice.actions;
+export const { deleteBoardItem, createBoardItem } = boardSlice.actions;
 
 export default boardSlice;

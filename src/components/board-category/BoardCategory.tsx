@@ -29,16 +29,29 @@ export const BoardCategory = ({ category }: IProps) => {
 const BoardCategoryWrapper = styled(List).attrs(() => ({
   guttersize: 1,
 }))`
-  margin: 0 ${(props) => props.guttersize}rem 3rem 0;
+  margin: 0 0 3rem 0;
   padding: 0;
   width: 100%;
 
   @media only screen and (min-width: 1000px) {
-    width: calc(50% - ${(props) => props.guttersize}rem);
+    margin-right: ${(props) => props.guttersize}rem;
+    width: calc(50% - ${(props) => props.guttersize / 2}rem);
+
+    &:nth-child(even) {
+      margin-right: 0;
+    }
   }
 
   @media only screen and (min-width: 1200px) {
-    width: calc(calc(100% - ${(props) => props.guttersize * 4}rem) / 4);
+    width: calc(calc(100% - ${(props) => props.guttersize * 3}rem) / 4);
+
+    &:nth-child(even) {
+      margin-right: ${(props) => props.guttersize}rem;
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
   }
 `;
 
