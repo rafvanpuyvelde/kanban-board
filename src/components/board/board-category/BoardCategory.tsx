@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Draggable } from "react-beautiful-dnd";
 
 import { List } from "antd";
 import { IBoardCategory } from "../../../types/BoardTypes";
@@ -21,38 +22,27 @@ export const BoardCategory = ({ category }: IProps) => {
       }
       bordered
       dataSource={category.items}
-      renderItem={(item: any) => <BoardItem key={item.id} item={item} />}
+      renderItem={(item: any, index: number) => (
+        <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
+              <BoardItem key={item.id} item={item} />
+            </div>
+          )}
+        </Draggable>
+      )}
     />
   );
 };
 
-const BoardCategoryWrapper = styled(List).attrs(() => ({
-  guttersize: 1,
-}))`
-  margin: 0 0 3rem 0;
+const BoardCategoryWrapper = styled(List)`
   padding: 0;
-  width: 100%;
-
-  @media only screen and (min-width: 1000px) {
-    margin-right: ${(props) => props.guttersize}rem;
-    width: calc(50% - ${(props) => props.guttersize / 2}rem);
-
-    &:nth-child(even) {
-      margin-right: 0;
-    }
-  }
-
-  @media only screen and (min-width: 1200px) {
-    width: calc(calc(100% - ${(props) => props.guttersize * 3}rem) / 4);
-
-    &:nth-child(even) {
-      margin-right: ${(props) => props.guttersize}rem;
-    }
-
-    &:last-of-type {
-      margin-right: 0;
-    }
-  }
+  min-width: 100%;
+  min-height: 100%;
 `;
 
 export default BoardCategory;
