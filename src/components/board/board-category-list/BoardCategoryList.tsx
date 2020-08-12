@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import BoardCategory from "../board-category/BoardCategory";
-import { IBoardCategory } from "../../types/BoardTypes";
+import { IBoardCategory } from "../../../types/BoardTypes";
 
 interface IProps {
   categories: IBoardCategory[];

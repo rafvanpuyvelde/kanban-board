@@ -7,9 +7,9 @@ import {
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
 
-import { IBoardCategoryListItem } from "../../types/BoardTypes";
+import { IBoardCategoryListItem } from "../../../types/BoardTypes";
 import { useDispatch } from "react-redux";
-import { deleteBoardItem } from "../../store/slices/boardSlice";
+import { deleteBoardItem } from "../../../store/slices/boardSlice";
 
 const { confirm } = Modal;
 

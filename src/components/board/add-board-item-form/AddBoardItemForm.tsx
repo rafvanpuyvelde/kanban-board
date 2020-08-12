@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Input, Select, Form } from "antd";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { RootState } from "../../../store/store";
 import { FormInstance } from "antd/lib/form";
 
 interface IProps {

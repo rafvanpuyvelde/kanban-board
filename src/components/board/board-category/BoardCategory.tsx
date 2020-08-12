@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { List } from "antd";
-import { IBoardCategory } from "../../types/BoardTypes";
+import { IBoardCategory } from "../../../types/BoardTypes";
 import BoardItem from "../board-item/BoardItem";
 import BoardCategoryHeader from "../board-category-header/BoardCategoryHeader";
 

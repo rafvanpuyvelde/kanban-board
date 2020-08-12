@@ -3,7 +3,7 @@ import "./App.css";
 import styled from "styled-components";
 
 import { Typography } from "antd";
-import Board from "../../components/board/Board";
+import Board from "../board/Board";
 const { Title } = Typography;
 
 export const App = () => {

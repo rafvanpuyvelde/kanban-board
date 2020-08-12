@@ -5,9 +5,9 @@ import styled from "styled-components";
 import { Button, Form } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
-import BoardCategoryList from "../board-category-list/BoardCategoryList";
-import AddBoardItemForm from "../add-board-item-form/AddBoardItemForm";
-import ModalForm from "../modal-form/ModalForm";
+import BoardCategoryList from "../../components/board/board-category-list/BoardCategoryList";
+import AddBoardItemForm from "../../components/board/add-board-item-form/AddBoardItemForm";
+import ModalForm from "../../../src/components/forms/modal-form/ModalForm";
 import { createBoardItem } from "../../store/slices/boardSlice";
 
 export const Board = () => {
