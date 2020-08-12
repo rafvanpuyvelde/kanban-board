@@ -138,6 +138,15 @@ const getNewBoardItemId = (state: IBoardState) => {
   return lastCategory.items[lastCategory.items.length - 1].id + 1;
 };
 
+const getCategoryIndexByCategoryName = (
+  state: IBoardState,
+  categoryName: string
+): number => {
+  return state.categories.findIndex(
+    (category) => category.name === categoryName
+  );
+};
+
 const boardSlice = createSlice({
   name: "board",
   initialState: initialBoardState,
@@ -181,13 +190,11 @@ const boardSlice = createSlice({
         newItemIndex: number;
       }>
     ) => {
-      // Get the category index by the category name
-      const categoryIndex = state.categories.findIndex(
-        (category) => category.name === payload.category
-      );
-
       // Get the category items
-      const items = state.categories[categoryIndex].items;
+      const items =
+        state.categories[
+          getCategoryIndexByCategoryName(state, payload.category)
+        ].items;
       // Remove the item from its original position
       const [removedItem] = items.splice(payload.oldItemIndex, 1);
       // Insert into the new position
@@ -204,19 +211,15 @@ const boardSlice = createSlice({
         newItemIndex: number;
       }>
     ) => {
-      // Get the old category index by the category name
-      const oldCategoryIndex = state.categories.findIndex(
-        (category) => category.name === payload.oldCategory
-      );
-
-      // Get the new category index by the category name
-      const newCategoryIndex = state.categories.findIndex(
-        (category) => category.name === payload.newCategory
-      );
-
       // Get the category items
-      const oldCategoryItems = state.categories[oldCategoryIndex].items;
-      const newCategoryItems = state.categories[newCategoryIndex].items;
+      const oldCategoryItems =
+        state.categories[
+          getCategoryIndexByCategoryName(state, payload.oldCategory)
+        ].items;
+      const newCategoryItems =
+        state.categories[
+          getCategoryIndexByCategoryName(state, payload.newCategory)
+        ].items;
 
       // Remove the item from its original category
       const [removedItem] = oldCategoryItems.splice(payload.oldItemIndex, 1);
