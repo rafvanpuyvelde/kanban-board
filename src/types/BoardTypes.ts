@@ -18,6 +18,38 @@ export type BoardCategory = {
 export type BoardCategoryListItem = {
   id: number;
   description: string;
-  tags: string[];
-  author: string;
+  tags: BoardTag[];
+  author: BoardUser;
 };
+
+// A tag used to describe a board item
+export type BoardTag = {
+  text: string;
+  color: string;
+};
+
+// A board user
+export type BoardUser = {
+  name: string;
+  profilePicture: BoardProfilePicture;
+};
+
+// A user profile picture
+export type BoardProfilePicture = {
+  path: string;
+};
+
+// The available board tag colors
+export enum BoardTagColors {
+  MAGENTA = "magenta",
+  RED = "red",
+  VOLCANO = "volcano",
+  ORANGE = "orange",
+  GOLD = "gold",
+  LIME = "lime",
+  GREEN = "green",
+  CYAN = "cyan",
+  BLUE = "blue",
+  GEEKBLUE = "geekblue",
+  PURPLE = "purple",
+}

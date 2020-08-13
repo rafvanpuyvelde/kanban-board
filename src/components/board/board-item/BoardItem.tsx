@@ -7,9 +7,10 @@ import {
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import { Store } from "antd/lib/form/interface";
-
+import { v4 as uuid } from "uuid";
 import { BoardCategoryListItem } from "../../../types/BoardTypes";
 import { useDispatch } from "react-redux";
+
 import {
   deleteBoardItem,
   editBoardItem,
@@ -52,8 +53,6 @@ export const BoardItem = ({ item }: IProps) => {
   };
 
   const editItemFormSuccessHandler = (values: Store) => {
-    console.log(values);
-
     // Reset form
     setModalVisibility(false);
     form.resetFields();
@@ -75,6 +74,11 @@ export const BoardItem = ({ item }: IProps) => {
     return values.tags.split(" ");
   };
 
+  const getItemTags = (item: BoardCategoryListItem): string => {
+    const itemTags: string[] = item.tags.map((tag) => tag.text);
+    return itemTags.join(" ");
+  };
+
   return (
     <BoardItemWrapper>
       <ItemCard
@@ -84,15 +88,21 @@ export const BoardItem = ({ item }: IProps) => {
         ]}
       >
         <Skeleton loading={false} avatar active>
-          <p>{item.description}</p>
+          <ItemDescription>{item.description}</ItemDescription>
+
           <div>
             {item.tags &&
               item.tags.map((tag) => (
-                <Tag key={tag} color="cyan">
-                  {tag}
-                </Tag>
+                <BoardTag key={`${tag.text}-${uuid()}`} color={tag.color}>
+                  {tag.text}
+                </BoardTag>
               ))}
           </div>
+
+          <CardAuthorInfoWrapper>
+            <p>{item.author.name}</p>
+            <img alt="author profile" src={item.author.profilePicture.path} />
+          </CardAuthorInfoWrapper>
         </Skeleton>
       </ItemCard>
 
@@ -110,7 +120,7 @@ export const BoardItem = ({ item }: IProps) => {
           form={form}
           initialValues={{
             description: item.description,
-            tags: item.tags ? item.tags.join(" ") : "",
+            tags: getItemTags(item),
           }}
         />
       </ModalForm>
@@ -131,6 +141,42 @@ const ItemCard = styled(Card)`
   min-width: 100%;
   min-height: 100%;
   box-shadow: 0px 6px 16px 1px rgba(208, 216, 243, 0.6);
+`;
+
+const ItemDescription = styled.p`
+  font-weight: 500;
+`;
+
+const CardAuthorInfoWrapper = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 0.5rem;
+
+  @media only screen and (min-width: 1000px) {
+    margin-top: 1rem;
+  }
+
+  p {
+    margin: 0 0.5rem 0 0;
+    padding: 0;
+    color: gray;
+    font-weight: 200;
+  }
+
+  img {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+  }
+`;
+
+const BoardTag = styled(Tag)`
+  @media only screen and (min-width: 1000px) {
+    margin-top: 0.8rem;
+  }
 `;
 
 export default BoardItem;

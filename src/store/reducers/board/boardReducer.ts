@@ -1,12 +1,16 @@
 import { IBoardState } from "../../slices/board/boardSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { BoardCategory } from "../../../types/BoardTypes";
+import {
+  BoardCategory,
+  BoardTag,
+  BoardTagColors,
+} from "../../../types/BoardTypes";
 
 //
 // Helper methods
 //
 
-const getBoardItemDetailsById = (
+export const getBoardItemDetailsById = (
   state: IBoardState,
   id: number
 ): {
@@ -47,6 +51,56 @@ const getCategoryIndexByCategoryName = (
   );
 };
 
+const getTagColor = (state: IBoardState, tagName: string): string => {
+  let color: string;
+  const tagColor = tagAlreadyExist(state, tagName);
+
+  // Tag already exists -> get color
+  // Tag doesn't exist yet -> generate random color
+  if (tagColor !== undefined) color = tagColor;
+  else color = generateRandomTagColor();
+
+  return color;
+};
+
+const tagAlreadyExist = (
+  state: IBoardState,
+  tagName: string
+): undefined | string => {
+  for (
+    let categoryIndex = 0;
+    categoryIndex < state.categories.length;
+    categoryIndex++
+  ) {
+    const category = state.categories[categoryIndex];
+
+    for (let itemIndex = 0; itemIndex < category.items.length; itemIndex++) {
+      const item = category.items[itemIndex];
+
+      if (item.tags) {
+        for (let tagIndex = 0; tagIndex < item.tags.length; tagIndex++) {
+          const tag = item.tags[tagIndex];
+
+          if (tag.text === tagName) return tag.color;
+        }
+      }
+    }
+  }
+
+  return undefined;
+};
+
+const generateRandomTagColor = (): string => {
+  const colors = Object.keys(BoardTagColors).map((color) =>
+    color.toLowerCase()
+  );
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
+//
+// Reducers
+//
+
 export const deleteBoardItemReducer = (
   state: IBoardState,
   { payload }: PayloadAction<number>
@@ -58,10 +112,6 @@ export const deleteBoardItemReducer = (
       1
     );
 };
-
-//
-// Reducers
-//
 
 export const createBoardItemReducer = (
   state: IBoardState,
@@ -77,13 +127,25 @@ export const createBoardItemReducer = (
     (category: BoardCategory) => category.name === payload.category
   );
 
-  if (category)
+  const tags: BoardTag[] = payload.tags.map((tag) => ({
+    text: tag,
+    color: getTagColor(state, tag),
+  }));
+
+  if (category) {
     category.items.push({
       id: getNewBoardItemId(state),
       description: payload.description,
-      author: "Jane Doe",
-      tags: payload.tags,
+      author: {
+        name: "Jane Doe", // Hardcoded for MVP
+        profilePicture: {
+          path:
+            "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260", // Hardcoded for MVP
+        },
+      },
+      tags: tags,
     });
+  }
 };
 
 export const editBoardItemReducer = (
@@ -98,11 +160,18 @@ export const editBoardItemReducer = (
 ) => {
   const itemDetails = getBoardItemDetailsById(state, payload.itemId);
 
+  const tags: BoardTag[] = payload.tags.map((tag) => {
+    return {
+      color: getTagColor(state, tag),
+      text: tag,
+    };
+  });
+
   if (itemDetails) {
     let item =
       state.categories[itemDetails.categoryIndex].items[itemDetails?.itemIndex];
     item.description = payload.description;
-    item.tags = payload.tags;
+    item.tags = tags;
   }
 };
 
