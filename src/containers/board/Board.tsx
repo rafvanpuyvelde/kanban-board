@@ -4,6 +4,7 @@ import { RootState } from "../../store/store";
 import styled from "styled-components";
 import { Button, Form } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { Store } from "antd/lib/form/interface";
 
 import BoardCategoryList from "../../components/board/board-category-list/BoardCategoryList";
 import AddBoardItemForm from "../../components/board/add-board-item-form/AddBoardItemForm";
@@ -21,20 +22,29 @@ export const Board = () => {
     form
       .validateFields()
       .then((values) => {
-        setModalVisibility(false);
-        form.resetFields();
-        if (values["Tags"]) values["Tags"] = values["Tags"].split(" ");
-        dispatch(
-          createBoardItem({
-            category: values["Category"],
-            description: values["Description"],
-            tags: values["Tags"],
-          })
-        );
+        addItemFormSuccessHandler(values);
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
+  };
+
+  const addItemFormSuccessHandler = (values: Store) => {
+    // Reset form
+    setModalVisibility(false);
+    form.resetFields();
+
+    // Split tags into list of separate tags
+    if (values["Tags"]) values["Tags"] = values["Tags"].split(" ");
+
+    // Add the item to the store
+    dispatch(
+      createBoardItem({
+        category: values["Category"],
+        description: values["Description"],
+        tags: values["Tags"],
+      })
+    );
   };
 
   return (
