@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Skeleton, List, Card, Tag, Modal } from "antd";
+import { Skeleton, List, Card, Tag, Modal, Form } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
+import { Store } from "antd/lib/form/interface";
 
 import { BoardCategoryListItem } from "../../../types/BoardTypes";
 import { useDispatch } from "react-redux";
-import { deleteBoardItem } from "../../../store/slices/board/boardSlice";
+import {
+  deleteBoardItem,
+  editBoardItem,
+} from "../../../store/slices/board/boardSlice";
+import ModalForm from "../../forms/modal-form/ModalForm";
+import BoardItemForm from "../board-item-form/BoardItemForm";
 
 const { confirm } = Modal;
 
@@ -19,6 +25,9 @@ export interface IProps {
 
 export const BoardItem = ({ item }: IProps) => {
   const dispatch = useDispatch();
+
+  const [form] = Form.useForm();
+  const [modalIsVisible, setModalVisibility] = useState(false);
 
   const deleteItemHandler = () => {
     confirm({
@@ -31,12 +40,47 @@ export const BoardItem = ({ item }: IProps) => {
     });
   };
 
+  const editItemFormHandler = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        editItemFormSuccessHandler(values);
+      })
+      .catch((info) => {
+        console.log("Validate Failed:", info);
+      });
+  };
+
+  const editItemFormSuccessHandler = (values: Store) => {
+    console.log(values);
+
+    // Reset form
+    setModalVisibility(false);
+    form.resetFields();
+
+    // Split tags into list of separate tags
+    if (values.tags) values.tags = getTagsFromFormValues(values);
+
+    // Edit the existing store item
+    dispatch(
+      editBoardItem({
+        itemId: item.id,
+        description: values.description,
+        tags: values.tags,
+      })
+    );
+  };
+
+  const getTagsFromFormValues = (values: Store): string[] => {
+    return values.tags.split(" ");
+  };
+
   return (
     <BoardItemWrapper>
       <ItemCard
         actions={[
           <DeleteOutlined key="delete" onClick={deleteItemHandler} />,
-          <EditOutlined key="edit" />,
+          <EditOutlined key="edit" onClick={() => setModalVisibility(true)} />,
         ]}
       >
         <Skeleton loading={false} avatar active>
@@ -51,6 +95,25 @@ export const BoardItem = ({ item }: IProps) => {
           </div>
         </Skeleton>
       </ItemCard>
+
+      <ModalForm
+        title="Edit existing item"
+        okText="Save"
+        cancelText="Cancel"
+        isVisible={modalIsVisible}
+        onContinueHandler={editItemFormHandler}
+        onCancelHandler={() => {
+          setModalVisibility(false);
+        }}
+      >
+        <BoardItemForm
+          form={form}
+          initialValues={{
+            description: item.description,
+            tags: item.tags ? item.tags.join(" ") : "",
+          }}
+        />
+      </ModalForm>
     </BoardItemWrapper>
   );
 };

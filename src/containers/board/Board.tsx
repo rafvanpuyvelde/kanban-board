@@ -7,7 +7,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Store } from "antd/lib/form/interface";
 
 import BoardCategoryList from "../../components/board/board-category-list/BoardCategoryList";
-import AddBoardItemForm from "../../components/board/add-board-item-form/AddBoardItemForm";
+import BoardItemForm from "../../components/board/board-item-form/BoardItemForm";
 import ModalForm from "../../../src/components/forms/modal-form/ModalForm";
 import { createBoardItem } from "../../store/slices/board/boardSlice";
 
@@ -35,16 +35,20 @@ export const Board = () => {
     form.resetFields();
 
     // Split tags into list of separate tags
-    if (values["Tags"]) values["Tags"] = values["Tags"].split(" ");
+    if (values.tags) values.tags = getTagsFromFormValues(values);
 
     // Add the item to the store
     dispatch(
       createBoardItem({
-        category: values["Category"],
-        description: values["Description"],
-        tags: values["Tags"],
+        category: values.category,
+        description: values.description,
+        tags: values.tags,
       })
     );
+  };
+
+  const getTagsFromFormValues = (values: Store): string[] => {
+    return values.tags.split(" ");
   };
 
   return (
@@ -74,7 +78,7 @@ export const Board = () => {
             setModalVisibility(false);
           }}
         >
-          <AddBoardItemForm form={form} />
+          <BoardItemForm form={form} />
         </ModalForm>
       </BoardHeadingWrapper>
 

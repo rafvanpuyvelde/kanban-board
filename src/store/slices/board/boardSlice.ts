@@ -8,6 +8,7 @@ import {
   createBoardItemReducer,
   moveItemInCategoryReducer,
   moveItemToOtherCategoryReducer,
+  editBoardItemReducer,
 } from "../../reducers/board/boardReducer";
 
 export interface IBoardState extends BoardCategoryList {
@@ -20,6 +21,7 @@ const boardSlice = createSlice({
   reducers: {
     deleteBoardItem: deleteBoardItemReducer,
     createBoardItem: createBoardItemReducer,
+    editBoardItem: editBoardItemReducer,
     moveItemInCategory: moveItemInCategoryReducer,
     moveItemToOtherCategory: moveItemToOtherCategoryReducer,
   },
@@ -28,6 +30,7 @@ const boardSlice = createSlice({
 export const {
   deleteBoardItem,
   createBoardItem,
+  editBoardItem,
   moveItemInCategory,
   moveItemToOtherCategory,
 } = boardSlice.actions;

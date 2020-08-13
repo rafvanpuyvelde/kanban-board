@@ -6,23 +6,33 @@ import { RootState } from "../../../store/store";
 import { FormInstance } from "antd/lib/form";
 import { BoardCategory } from "../../../types/BoardTypes";
 
+export type BoardItemFormData = {
+  description: string;
+  tags: string;
+};
+
 interface IProps {
   form: FormInstance;
+  initialValues?: BoardItemFormData;
 }
 
-export const AddBoardItemForm = (props: IProps) => {
+export const BoardItemForm = (props: IProps) => {
+  const isEditForm = props.initialValues !== undefined;
+
   const categories = useSelector((state: RootState) =>
     state.board.categories.map((category: BoardCategory) => category.name)
   );
 
   return (
-    <BoardItemForm form={props.form}>
+    <BoardItemFormWrapper form={props.form} initialValues={props.initialValues}>
       <Form.Item
-        name="Category"
+        name="category"
         label="Category"
-        rules={[{ required: true, message: "Please choose a Category!" }]}
+        rules={[
+          { required: !isEditForm, message: "Please choose a Category!" },
+        ]}
       >
-        <Select>
+        <Select disabled={isEditForm}>
           {
             // TODO: Disable adding an item if there are no categories
             categories.length > 0 &&
@@ -36,25 +46,25 @@ export const AddBoardItemForm = (props: IProps) => {
       </Form.Item>
 
       <Form.Item
-        name="Description"
+        name="description"
         label="Description"
         rules={[{ required: true, message: "Please input your Description!" }]}
       >
         <Input />
       </Form.Item>
 
-      <Form.Item name="Tags" label="Tags" rules={[{ required: false }]}>
+      <Form.Item name="tags" label="Tags" rules={[{ required: false }]}>
         <Input />
       </Form.Item>
-    </BoardItemForm>
+    </BoardItemFormWrapper>
   );
 };
 
-const BoardItemForm = styled(Form)`
+const BoardItemFormWrapper = styled(Form)`
   display: flex;
   flex-flow: column nowrap;
   justify-content: stretch;
   align-items: stretch;
 `;
 
-export default AddBoardItemForm;
+export default BoardItemForm;

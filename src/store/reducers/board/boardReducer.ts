@@ -86,6 +86,26 @@ export const createBoardItemReducer = (
     });
 };
 
+export const editBoardItemReducer = (
+  state: IBoardState,
+  {
+    payload,
+  }: PayloadAction<{
+    itemId: number;
+    description: string;
+    tags: string[];
+  }>
+) => {
+  const itemDetails = getBoardItemDetailsById(state, payload.itemId);
+
+  if (itemDetails) {
+    let item =
+      state.categories[itemDetails.categoryIndex].items[itemDetails?.itemIndex];
+    item.description = payload.description;
+    item.tags = payload.tags;
+  }
+};
+
 export const moveItemInCategoryReducer = (
   state: IBoardState,
   {
