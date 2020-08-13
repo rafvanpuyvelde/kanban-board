@@ -13,7 +13,7 @@ import DroppableGrid from "../../droppable/droppable-grid/DroppableGrid";
 import {
   moveItemInCategory,
   moveItemToOtherCategory,
-} from "../../../store/slices/boardSlice";
+} from "../../../store/slices/board/boardSlice";
 
 interface IProps {
   categories: IBoardCategory[];

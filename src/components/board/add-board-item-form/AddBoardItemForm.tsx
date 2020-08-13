@@ -4,6 +4,7 @@ import { Input, Select, Form } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { FormInstance } from "antd/lib/form";
+import { IBoardCategory } from "../../../types/BoardTypes";
 
 interface IProps {
   form: FormInstance;
@@ -11,7 +12,7 @@ interface IProps {
 
 export const AddBoardItemForm = (props: IProps) => {
   const categories = useSelector((state: RootState) =>
-    state.board.categories.map((category) => category.name)
+    state.board.categories.map((category: IBoardCategory) => category.name)
   );
 
   return (

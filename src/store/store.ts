@@ -5,7 +5,7 @@ import {
   combineReducers,
 } from "@reduxjs/toolkit";
 
-import boardSlice from "./slices/boardSlice";
+import boardSlice from "./slices/board/boardSlice";
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<

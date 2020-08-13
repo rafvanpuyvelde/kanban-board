@@ -8,7 +8,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import BoardCategoryList from "../../components/board/board-category-list/BoardCategoryList";
 import AddBoardItemForm from "../../components/board/add-board-item-form/AddBoardItemForm";
 import ModalForm from "../../../src/components/forms/modal-form/ModalForm";
-import { createBoardItem } from "../../store/slices/boardSlice";
+import { createBoardItem } from "../../store/slices/board/boardSlice";
 
 export const Board = () => {
   const [form] = Form.useForm();

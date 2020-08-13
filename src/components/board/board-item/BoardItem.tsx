@@ -9,7 +9,7 @@ import {
 
 import { IBoardCategoryListItem } from "../../../types/BoardTypes";
 import { useDispatch } from "react-redux";
-import { deleteBoardItem } from "../../../store/slices/boardSlice";
+import { deleteBoardItem } from "../../../store/slices/board/boardSlice";
 
 const { confirm } = Modal;
 
