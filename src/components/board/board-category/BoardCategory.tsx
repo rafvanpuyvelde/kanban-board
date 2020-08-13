@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 
 import { List } from "antd";
-import { IBoardCategory } from "../../../types/BoardTypes";
+import { BoardCategory as BoardCategoryType } from "../../../types/BoardTypes";
 import BoardItem from "../board-item/BoardItem";
 import BoardCategoryHeader from "../board-category-header/BoardCategoryHeader";
 
 interface IProps {
-  category: IBoardCategory;
+  category: BoardCategoryType;
 }
 
 export const BoardCategory = ({ category }: IProps) => {

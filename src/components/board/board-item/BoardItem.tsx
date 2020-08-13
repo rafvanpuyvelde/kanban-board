@@ -7,14 +7,14 @@ import {
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
 
-import { IBoardCategoryListItem } from "../../../types/BoardTypes";
+import { BoardCategoryListItem } from "../../../types/BoardTypes";
 import { useDispatch } from "react-redux";
 import { deleteBoardItem } from "../../../store/slices/board/boardSlice";
 
 const { confirm } = Modal;
 
 export interface IProps {
-  item: IBoardCategoryListItem;
+  item: BoardCategoryListItem;
 }
 
 export const BoardItem = ({ item }: IProps) => {

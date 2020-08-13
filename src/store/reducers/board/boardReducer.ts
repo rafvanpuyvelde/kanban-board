@@ -1,6 +1,6 @@
 import { IBoardState } from "../../slices/board/boardSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { IBoardCategory } from "../../../types/BoardTypes";
+import { BoardCategory } from "../../../types/BoardTypes";
 
 //
 // Helper methods
@@ -74,7 +74,7 @@ export const createBoardItemReducer = (
   }>
 ) => {
   const category = state.categories.find(
-    (category: IBoardCategory) => category.name === payload.category
+    (category: BoardCategory) => category.name === payload.category
   );
 
   if (category)

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { IBoardCategoryList } from "../../../types/BoardTypes";
+import { BoardCategoryList } from "../../../types/BoardTypes";
 import initialBoardState from "./initialBoardState";
 
 import {
@@ -10,7 +10,7 @@ import {
   moveItemToOtherCategoryReducer,
 } from "../../reducers/board/boardReducer";
 
-export interface IBoardState extends IBoardCategoryList {
+export interface IBoardState extends BoardCategoryList {
   users: string[];
 }
 

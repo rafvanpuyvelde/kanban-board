@@ -8,7 +8,7 @@ import {
 import { useDispatch } from "react-redux";
 
 import BoardCategory from "../board-category/BoardCategory";
-import { IBoardCategory } from "../../../types/BoardTypes";
+import { BoardCategory as BoardCategoryType } from "../../../types/BoardTypes";
 import DroppableGrid from "../../droppable/droppable-grid/DroppableGrid";
 import {
   moveItemInCategory,
@@ -16,7 +16,7 @@ import {
 } from "../../../store/slices/board/boardSlice";
 
 interface IProps {
-  categories: IBoardCategory[];
+  categories: BoardCategoryType[];
 }
 
 interface IDraggable {
@@ -34,10 +34,10 @@ export const BoardCategoryList = ({ categories }: IProps) => {
     if (!dragPositionIsValid(destination, source)) return;
 
     // Find column from which the item was dragged from
-    const oldColumn: IBoardCategory = categories[+source.droppableId];
+    const oldColumn: BoardCategoryType = categories[+source.droppableId];
 
     // Find column in which the item was dropped
-    const newColumn: IBoardCategory = categories[+destination.droppableId];
+    const newColumn: BoardCategoryType = categories[+destination.droppableId];
 
     // Move item
     if (oldColumn === newColumn)
@@ -58,7 +58,7 @@ export const BoardCategoryList = ({ categories }: IProps) => {
   };
 
   const moveItemInOriginalList = (
-    oldColumn: IBoardCategory,
+    oldColumn: BoardCategoryType,
     source: DraggableLocation,
     destination: DraggableLocation
   ) => {
@@ -72,8 +72,8 @@ export const BoardCategoryList = ({ categories }: IProps) => {
   };
 
   const moveItemToNewList = (
-    oldColumn: IBoardCategory,
-    newColumn: IBoardCategory,
+    oldColumn: BoardCategoryType,
+    newColumn: BoardCategoryType,
     source: DraggableLocation,
     destination: DraggableLocation
   ) => {
