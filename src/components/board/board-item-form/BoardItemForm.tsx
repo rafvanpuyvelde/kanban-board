@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Input, Select, Form } from "antd";
 import { useSelector } from "react-redux";
@@ -22,6 +22,11 @@ export const BoardItemForm = (props: IProps) => {
   const categories = useSelector((state: RootState) =>
     state.board.categories.map((category: BoardCategory) => category.name)
   );
+
+  useEffect(() => {
+    // Resets the form fields when the state changes, otherwise the old values remain
+    props.form.resetFields();
+  }, [props.form, props.initialValues]);
 
   return (
     <BoardItemFormWrapper form={props.form} initialValues={props.initialValues}>
